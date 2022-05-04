@@ -2,6 +2,8 @@ package br.com.mercadolivre.projetointegrador.marketplace.controllers;
 
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.PurchaseResponseDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.exceptions.NotFoundException;
+import br.com.mercadolivre.projetointegrador.marketplace.exceptions.OutOfStockException;
+import br.com.mercadolivre.projetointegrador.marketplace.exceptions.UnauthorizedException;
 import br.com.mercadolivre.projetointegrador.marketplace.model.Purchase;
 import br.com.mercadolivre.projetointegrador.marketplace.services.CartService;
 import br.com.mercadolivre.projetointegrador.marketplace.services.PurchaseService;
@@ -35,11 +37,15 @@ public class PurchaseController implements SecuredMarketplaceRestController {
   CartService cartService;
 
   @Operation(summary = "SALVA UMA COMPRA", description = "Registra uma compra.")
-  @ApiResponses(value = {@ApiResponse(description = "Compra registrada.", responseCode = "201")})
+  @ApiResponses(
+      value = {
+        @ApiResponse(description = "Compra registrada.", responseCode = "201"),
+        @ApiResponse(description = "Carrinho não encontrado", responseCode = "404")
+      })
   @PostMapping
   public ResponseEntity<Void> createPurchase(
       Authentication authentication, UriComponentsBuilder uriBuilder)
-      throws NotFoundException, JsonProcessingException {
+      throws NotFoundException, JsonProcessingException, OutOfStockException {
     AppUser requestUser = (AppUser) authentication.getPrincipal();
 
     purchaseService.createPurchase(requestUser.getId());
@@ -70,9 +76,20 @@ public class PurchaseController implements SecuredMarketplaceRestController {
     return ResponseEntity.ok(purchaseService.listAllPurchases(id));
   }
 
-  //  public ResponseEntity<Void> payment(
-  //          @Authenticate
-  //  ) {
-  //
-  //  }
+  @Operation(
+      summary = "ALTERA O STATUS DE UMA COMPRA",
+      description = "Modifica o Status da compra com id informado na URL.")
+  @ApiResponses(
+      value = {
+        @ApiResponse(description = "Compra finalizada", responseCode = "200"),
+        @ApiResponse(description = "Compra não encontrada", responseCode = "404"),
+        @ApiResponse(description = "Não autorizado", responseCode = "403")
+      })
+  @PutMapping("/{buyerId}/{purchaseId}")
+  public ResponseEntity<PurchaseResponseDTO> updatePurchaseStatus(
+      @PathVariable Long buyerId, @PathVariable Long purchaseId)
+      throws NotFoundException, UnauthorizedException {
+    PurchaseResponseDTO purchaseResponse = purchaseService.changeStatus(purchaseId, buyerId);
+    return ResponseEntity.ok(purchaseResponse);
+  }
 }
