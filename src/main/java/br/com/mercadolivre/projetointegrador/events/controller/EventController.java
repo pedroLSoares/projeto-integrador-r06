@@ -17,7 +17,7 @@ public class EventController {
     private final WarehouseEventService eventService;
 
     @PostMapping("/events")
-    public ResponseEntity<?> registerEvent(@RequestBody @Valid NewWarehouseEventDTO body){
+    public ResponseEntity<?> registerWarehouseEvent(@RequestBody @Valid NewWarehouseEventDTO body){
         WarehouseEvent createdEvent = eventService.registerEventToWarehouse(body);
 
         return ResponseEntity.ok().build();
