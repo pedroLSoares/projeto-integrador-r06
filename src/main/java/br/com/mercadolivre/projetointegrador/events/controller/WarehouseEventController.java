@@ -1,5 +1,6 @@
 package br.com.mercadolivre.projetointegrador.events.controller;
 
+import br.com.mercadolivre.projetointegrador.events.dto.request.UpdateEventProductsDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseEventDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.response.EventsExecutedDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseEventCreatedDTO;
@@ -21,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/warehouse")
 @RequiredArgsConstructor
-public class EventController {
+public class WarehouseEventController {
 
     private final WarehouseEventService eventService;
     private final EventsAssembler assembler;
@@ -37,7 +38,7 @@ public class EventController {
     // GET eventos cadastrados
     @GetMapping("/events")
     //@JsonView(WarehouseEventView.WarehouseEventListResponse.class)
-    public ResponseEntity<List<WarehouseListEventsResponseDTO>> getRegisteredWarehouseEvents(){
+    public ResponseEntity<List<WarehouseListEventsResponseDTO>> getRegisteredEventsByWarehouse(){
         return assembler.toWarehousesEventsResponse(eventService.getAllWarehouseEvents(), HttpStatus.OK);
     }
 
@@ -68,10 +69,10 @@ public class EventController {
 
     }
 
-    @PostMapping( "/events/{warehouseEventId}/products/{productId}")
+    @PatchMapping( "/events/products")
     @JsonView(WarehouseEventView.WarehouseEventDetailsResponse.class)
-    public ResponseEntity<WarehouseEventDTO> addProductIntoEvent(@PathVariable Long warehouseEventId,@PathVariable Long productId){
-        WarehouseEvent result = eventService.addProductIntoEvent(warehouseEventId, productId);
+    public ResponseEntity<WarehouseEventDTO> addProductIntoEvent(@RequestBody UpdateEventProductsDTO updateEventProductsDTO){
+        WarehouseEvent result = eventService.addProductsIntoEvent(updateEventProductsDTO.getWarehouseEventId(), updateEventProductsDTO.getProductList());
 
         return assembler.toWarehouseEventResponse(result, HttpStatus.OK);
     }
@@ -85,11 +86,11 @@ public class EventController {
         return ResponseEntity.noContent().build();
     }
 
-    // Remover produto do evento
-    @DeleteMapping("/events/{warehouseEventID}/products/{productId}")
+    // Remover produtos do evento
+    @DeleteMapping("/events/products")
     @JsonView(WarehouseEventView.WarehouseEventDetailsResponse.class)
-    public ResponseEntity<WarehouseEventDTO> removeProductFromEvent(@PathVariable Long warehouseEventID, @PathVariable Long productId){
-        WarehouseEvent result = eventService.removeProductFromEvent(warehouseEventID, productId);
+    public ResponseEntity<WarehouseEventDTO> removeProductFromEvent(@RequestBody UpdateEventProductsDTO updateEventProductsDTO){
+        WarehouseEvent result = eventService.removeProductFromEvent(updateEventProductsDTO.getWarehouseEventId(), updateEventProductsDTO.getProductList());
 
         return assembler.toWarehouseEventResponse(result, HttpStatus.OK);
     }

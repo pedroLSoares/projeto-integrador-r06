@@ -24,7 +24,7 @@ public class WarehouseEventDTO {
 
     private WarehouseResponseDTO warehouse;
 
-    @JsonView({WarehouseEventView.WarehouseEventListResponse.class})
+    @JsonView({WarehouseEventView.WarehouseEventListResponse.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
     private EventResponseDTO event;
 
     @JsonView({WarehouseEventView.WarehouseEventDetailsResponse.class})

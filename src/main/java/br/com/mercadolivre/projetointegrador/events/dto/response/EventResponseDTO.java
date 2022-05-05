@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonView(WarehouseEventView.WarehouseEventListResponse.class)
+@JsonView({WarehouseEventView.WarehouseEventListResponse.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
 public class EventResponseDTO {
 
     private Long id;

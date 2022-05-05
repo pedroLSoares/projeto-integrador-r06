@@ -31,7 +31,7 @@ public class WarehouseEvent {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "warehouse_event_products",
             joinColumns = @JoinColumn(name = "warehouse_event_id"),

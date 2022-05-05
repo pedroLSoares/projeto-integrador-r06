@@ -61,22 +61,26 @@ public class WarehouseEventService {
          warehouseEventRepository.deleteById(warehouseEventId);
     }
 
-    public WarehouseEvent addProductIntoEvent(Long warehouseEventId, Long productId){
+    public WarehouseEvent addProductsIntoEvent(Long warehouseEventId, List<Long> productsIds){
         WarehouseEvent warehouseEvent = warehouseEventRepository
                 .findById(warehouseEventId).orElseThrow(() -> new NotFoundException("Evento não encontrado"));
 
-        Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Produto não encontrado"));
+        List<Product> products = productRepository.findAllById(productsIds);
 
-        warehouseEvent.getProducts().add(product);
+        if(products.isEmpty()){
+            throw new NotFoundException("Produtos não encontrados");
+        }
+
+        warehouseEvent.getProducts().addAll(products);
 
         return warehouseEventRepository.save(warehouseEvent);
     }
 
-    public WarehouseEvent removeProductFromEvent(Long warehouseEventId, Long productId){
+    public WarehouseEvent removeProductFromEvent(Long warehouseEventId, List<Long> productIds){
         WarehouseEvent warehouseEvent = warehouseEventRepository
                 .findById(warehouseEventId).orElseThrow(() -> new NotFoundException("Evento não encontrado"));
 
-        warehouseEvent.getProducts().removeIf(p -> p.getId().equals(productId));
+        warehouseEvent.getProducts().removeIf(p -> productIds.contains(p.getId()));
 
         return warehouseEventRepository.save(warehouseEvent);
     }

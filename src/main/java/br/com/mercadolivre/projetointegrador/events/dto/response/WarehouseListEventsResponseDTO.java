@@ -5,10 +5,8 @@ import lombok.*;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class WarehouseListEventsResponseDTO {
 
     private Long warehouseId;

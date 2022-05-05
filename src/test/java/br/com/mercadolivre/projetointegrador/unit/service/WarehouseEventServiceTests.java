@@ -66,10 +66,10 @@ public class WarehouseEventServiceTests {
     public void shouldAddNewProductIntoWarehouseEvent(){
         WarehouseEvent expected = new WarehouseEvent(1L, new Warehouse(), new Event(), new ArrayList<>(), null);
         Mockito.when(warehouseEventRepository.findById(Mockito.any())).thenReturn(Optional.of(expected));
-        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(new Product()));
+        Mockito.when(productRepository.findAllById(Mockito.any())).thenReturn(List.of(new Product()));
         Mockito.when(warehouseEventRepository.save(Mockito.any())).thenReturn(expected);
 
-        WarehouseEvent warehouseEvent = warehouseEventService.addProductIntoEvent(1L, 1L);
+        WarehouseEvent warehouseEvent = warehouseEventService.addProductsIntoEvent(1L, List.of(1L));
 
         Assertions.assertNotNull(warehouseEvent);
         Assertions.assertTrue(warehouseEvent.getProducts().size() > 0);
@@ -80,16 +80,16 @@ public class WarehouseEventServiceTests {
     public void shouldNotAddNewProductIntoWarehouseEventWhenNotFoundEvent(){
         Mockito.when(warehouseEventRepository.findById(Mockito.any())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NotFoundException.class, () -> warehouseEventService.addProductIntoEvent(1L, 1L));
+        Assertions.assertThrows(NotFoundException.class, () -> warehouseEventService.addProductsIntoEvent(1L, List.of(1L)));
     }
 
     @Test
     public void shouldNotAddNewProductIntoWarehouseEventWhenNotFoundProduct(){
         WarehouseEvent expected = new WarehouseEvent(1L, new Warehouse(), new Event(), new ArrayList<>(), null);
         Mockito.when(warehouseEventRepository.findById(Mockito.any())).thenReturn(Optional.of(expected));
-        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.empty());
+        Mockito.when(productRepository.findAllById(Mockito.any())).thenReturn(Collections.emptyList());
 
-        Assertions.assertThrows(NotFoundException.class, () -> warehouseEventService.addProductIntoEvent(1L, 1L));
+        Assertions.assertThrows(NotFoundException.class, () -> warehouseEventService.addProductsIntoEvent(1L, List.of(1L)));
 
     }
 
@@ -102,7 +102,7 @@ public class WarehouseEventServiceTests {
         Mockito.when(warehouseEventRepository.findById(Mockito.any())).thenReturn(Optional.of(expected));
         Mockito.when(warehouseEventRepository.save(Mockito.any())).thenReturn(expected);
 
-        WarehouseEvent warehouseEvent = warehouseEventService.removeProductFromEvent(1L, 1L);
+        WarehouseEvent warehouseEvent = warehouseEventService.removeProductFromEvent(1L, List.of(1L));
 
         Assertions.assertEquals(warehouseEvent.getProducts().size(), 0);
         Mockito.verify(warehouseEventRepository, Mockito.times(1)).save(expected);
@@ -112,7 +112,7 @@ public class WarehouseEventServiceTests {
     public void shouldNotRemoveProductFromWarehouseEventWhenNotFindEvent(){
         Mockito.when(warehouseEventRepository.findById(Mockito.any())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NotFoundException.class, () -> warehouseEventService.removeProductFromEvent(1L, 1L));
+        Assertions.assertThrows(NotFoundException.class, () -> warehouseEventService.removeProductFromEvent(1L, List.of(1L)));
 
     }
 

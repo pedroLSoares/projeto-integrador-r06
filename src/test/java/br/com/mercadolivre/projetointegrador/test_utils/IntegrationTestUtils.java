@@ -1,7 +1,9 @@
 package br.com.mercadolivre.projetointegrador.test_utils;
 
 import br.com.mercadolivre.projetointegrador.events.model.Event;
+import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
 import br.com.mercadolivre.projetointegrador.events.repository.EventRepository;
+import br.com.mercadolivre.projetointegrador.events.repository.WarehouseEventRepository;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CartProductDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreateOrUpdateAdDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreatePurchaseDTO;
@@ -54,6 +56,8 @@ public class IntegrationTestUtils {
 
   @Autowired private EventRepository eventRepository;
 
+  @Autowired private WarehouseEventRepository warehouseEventRepository;
+
   private final Random random = new Random();
   @Autowired private AdRepository adRepository;
 
@@ -93,6 +97,19 @@ public class IntegrationTestUtils {
             1000,
             CategoryEnum.FS,
             null));
+  }
+
+  public Section createSection(Warehouse warehouse) {
+    return sectionRepository.save(
+            new Section(
+                    null,
+                    warehouse,
+                    1L,
+                    BigDecimal.valueOf(33.33),
+                    BigDecimal.ZERO,
+                    1000,
+                    CategoryEnum.FS,
+                    null));
   }
 
   public Product createProduct() {
@@ -153,6 +170,22 @@ public class IntegrationTestUtils {
             .batchNumber(9595)
             .quantity(10)
             .build();
+
+    return batchRepository.save(batch);
+  }
+
+  public Batch createBatch(Section section, LocalDate dueDate, Product product) {
+    Batch batch =
+            Batch.builder()
+                    .product(product)
+                    .section(section)
+                    .seller(createUser())
+                    .price(BigDecimal.TEN)
+                    .order_number(123)
+                    .batchNumber(9595)
+                    .quantity(10)
+                    .dueDate(dueDate)
+                    .build();
 
     return batchRepository.save(batch);
   }
@@ -282,5 +315,15 @@ public class IntegrationTestUtils {
 
   public Event createEvent(){
     return eventRepository.save(new Event(null, "removeOldBatches", "removalEventExecutor", 0));
+  }
+
+  public WarehouseEvent createWarehouseEvent(){
+    Event event = createEvent();
+    Warehouse warehouse = createWarehouse();
+    Product product = createProduct();
+
+    WarehouseEvent warehouseEvent = new WarehouseEvent(null, warehouse, event, new ArrayList<>(List.of(product)), null);
+
+    return warehouseEventRepository.save(warehouseEvent);
   }
 }
