@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -15,5 +17,5 @@ import lombok.Setter;
 public class EventsExecutedDTO {
 
     private String event;
-    private Object results;
+    private List<Object> results;
 }

@@ -31,7 +31,7 @@ public class WarehouseEventService {
     private final WarehouseService warehouseService;
     private final EventService eventService;
     private final WarehouseEventRepository warehouseEventRepository;
-    private final BatchRepository batchRepository;
+    private final EventExecutorsService executorsService;
     private final ProductRepository productRepository;
 
     public WarehouseEvent getEvent(final Long warehouseEventId){
@@ -88,8 +88,8 @@ public class WarehouseEventService {
             try {
                 EventsExecutedDTO eventsExecutedDTO = new EventsExecutedDTO();
                 eventsExecutedDTO.setEvent(event.getEvent().getName());
-                Method mtd = this.getClass().getMethod(event.getEvent().getExecutor(), WarehouseEvent.class);
-                eventsExecutedDTO.setResults(mtd.invoke(this, event));
+                Method mtd = executorsService.getClass().getMethod(event.getEvent().getExecutor(), WarehouseEvent.class);
+                eventsExecutedDTO.setResults((List<Object>) mtd.invoke(executorsService, event));
                 event.setLastExecution(LocalDateTime.now());
 
                 warehouseEventRepository.save(event);
@@ -103,18 +103,5 @@ public class WarehouseEventService {
 
         }).collect(Collectors.toList());
 
-    }
-
-    public List<BatchResponseDTO> removalEventExecutor(WarehouseEvent warehouseEvent){
-        Warehouse warehouse = warehouseEvent.getWarehouse();
-
-        List<Batch> batchList = batchRepository.findAllBySectionWarehouseAndProductIn(warehouse, warehouseEvent.getProducts());
-
-        List<Batch> toRemove = batchList.stream().filter(batch -> batch.getDueDate().isBefore(LocalDate.now().plusWeeks(3))).collect(Collectors.toList());
-
-        batchRepository.deleteAllById(toRemove.stream().map(Batch::getId).collect(Collectors.toList()));
-
-
-        return BatchMapper.INSTANCE.toResponseDTOList(toRemove);
     }
 }

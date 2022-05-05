@@ -1,5 +1,7 @@
 package br.com.mercadolivre.projetointegrador.test_utils;
 
+import br.com.mercadolivre.projetointegrador.events.model.Event;
+import br.com.mercadolivre.projetointegrador.events.repository.EventRepository;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CartProductDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreateOrUpdateAdDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreatePurchaseDTO;
@@ -49,6 +51,8 @@ public class IntegrationTestUtils {
   @Autowired private RedisRepository redisRepository;
 
   @Autowired private AppUserRepository appUserRepository;
+
+  @Autowired private EventRepository eventRepository;
 
   private final Random random = new Random();
   @Autowired private AdRepository adRepository;
@@ -274,5 +278,9 @@ public class IntegrationTestUtils {
     dto.setWarehouses(productInWarehouseList);
 
     return dto;
+  }
+
+  public Event createEvent(){
+    return eventRepository.save(new Event(null, "removeOldBatches", "removalEventExecutor", 0));
   }
 }
