@@ -1,5 +1,6 @@
 package br.com.mercadolivre.projetointegrador.warehouse.dto.response;
 
+import br.com.mercadolivre.projetointegrador.events.view.WarehouseEventView;
 import br.com.mercadolivre.projetointegrador.warehouse.view.BatchView;
 import br.com.mercadolivre.projetointegrador.warehouse.view.SectionView;
 
@@ -18,7 +19,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class BatchResponseDTO {
 
-  @JsonView({BatchView.BatchAd.class, BatchView.BatchSection.class})
+  @JsonView({BatchView.BatchAd.class, BatchView.BatchSection.class, WarehouseEventView.WarehouseEventResponse.class})
   private Long id;
 
   @JsonView(BatchView.BatchAd.class)
@@ -30,19 +31,21 @@ public class BatchResponseDTO {
   @JsonView({BatchView.BatchAd.class, BatchView.BatchSection.class})
   private BigDecimal price;
 
+  @JsonView({WarehouseEventView.WarehouseEventResponse.class})
   private Integer order_number;
 
-  @JsonView(SectionView.SectionBatches.class)
+  @JsonView({SectionView.SectionBatches.class, WarehouseEventView.WarehouseEventResponse.class})
   private Integer batchNumber;
 
-  @JsonView({BatchView.BatchAd.class, SectionView.SectionBatches.class})
+  @JsonView({BatchView.BatchAd.class, SectionView.SectionBatches.class, WarehouseEventView.WarehouseEventResponse.class})
   private Integer quantity;
 
   private LocalDate manufacturing_datetime;
 
-  @JsonView(BatchView.BatchSection.class)
+  @JsonView({BatchView.BatchSection.class, WarehouseEventView.WarehouseEventResponse.class})
   private LocalDate dueDate;
 
+  @JsonView({WarehouseEventView.WarehouseEventResponse.class})
   private LocalDate created_at;
   private List<Map<String, String>> links;
 }
