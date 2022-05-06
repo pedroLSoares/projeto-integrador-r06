@@ -104,7 +104,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"orderNumber\": 1,\n    \"warehouseCode\": 1,\n    \"sectionCode\": 1,\n    \"batches\": [\n        {\n            \"product_id\": 1,\n            \"seller_id\": 1,\n            \"price\": 199.90,\n            \"batchNumber\": 9,\n            \"quantity\": 100,\n            \"manufacturing_datetime\": \"2022-01-01\",\n            \"due_date\": \"2022-11-01\"\n        },\n        {\n            \"product_id\": 1,\n            \"seller_id\": 1,\n            \"price\": 199.90,\n            \"batchNumber\": 10,\n            \"quantity\": 20,\n            \"manufacturing_datetime\": \"2022-01-01\",\n            \"due_date\": \"2022-11-01\"\n        }\n        \n    ]\n}",
+							"raw": "{\n    \"orderNumber\": 1,\n    \"warehouseCode\": 1,\n    \"sectionCode\": 1,\n    \"batches\": [\n        {\n            \"product_id\": 1,\n            \"seller_id\": 1,\n            \"price\": 199.90,\n            \"batchNumber\": 1,\n            \"quantity\": 100,\n            \"manufacturing_datetime\": \"2022-01-01\",\n            \"due_date\": \"2022-05-11\"\n        },\n        {\n            \"product_id\": 1,\n            \"seller_id\": 1,\n            \"price\": 199.90,\n            \"batchNumber\": 2,\n            \"quantity\": 20,\n            \"manufacturing_datetime\": \"2022-01-01\",\n            \"due_date\": \"2022-11-01\"\n        }\n        \n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -279,6 +279,279 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - List registered jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Register new Job",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"removeBatches\",\n    \"executor\": \"batchRemovalExecutor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Associate job in warehouse",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idEvent\": 1,\n    \"idWarehouse\": 1,\n    \"productList\": [\n        1\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - List all jobs per warehouse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - List all jobs in one warehouse",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idEvent\": 1,\n    \"idWarehouse\": 1,\n    \"productList\": [\n        1\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/1/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Detail warehouse job",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs/detail/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs",
+								"detail",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Add product in warehouse event",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"warehouseEventId\": 1,\n    \"productList\": [\n        1\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Remove product from warehouse job",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"warehouseEventId\": 1,\n    \"productList\": [\n        1\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Remove warehouse job",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[WAREHOUSE] - R06 - Execute events",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/warehouse/jobs/execute",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"warehouse",
+								"jobs",
+								"execute"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
@@ -327,7 +600,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"batchesId\": [9],\n    \"name\": \"Novo anùncio\",\n    \"quantity\": 1,\n    \"price\": 199.90,\n    \"discount\": 0,\n    \"category\": \"FS\"\n}",
+							"raw": "{\n    \"batchesId\": [1],\n    \"name\": \"Novo anùncio\",\n    \"quantity\": 1,\n    \"price\": 199.90,\n    \"discount\": 0,\n    \"category\": \"FS\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -552,7 +825,7 @@
 				{
 					"name": "[MARKETPLACE] - Update purchase status by buyer Id and Purchase ID",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "localhost:8080/api/v1/customers/marketplace/purchases/1/1",

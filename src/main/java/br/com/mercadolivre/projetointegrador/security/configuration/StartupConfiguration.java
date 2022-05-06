@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 @Configuration
 public class StartupConfiguration implements ApplicationListener<ContextRefreshedEvent> {
@@ -31,11 +32,15 @@ public class StartupConfiguration implements ApplicationListener<ContextRefreshe
           List.of(new UserRole(null, "CUSTOMER"), new UserRole(null, "MANAGER")));
     }
 
-    jobRepository.save(new Job(
-            null,
-            "removeBatches",
-            "batchRemovalExecutor"
-    ));
+    Optional<Job> optionalJob = jobRepository.findByExecutor("batchRemovalExecutor");
+
+    if(optionalJob.isEmpty()){
+      jobRepository.save(new Job(
+              null,
+              "removeBatches",
+              "batchRemovalExecutor"
+      ));
+    }
 
     alreadySetup = true;
   }

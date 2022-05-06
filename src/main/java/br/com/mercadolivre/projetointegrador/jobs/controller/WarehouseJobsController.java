@@ -10,6 +10,7 @@ import br.com.mercadolivre.projetointegrador.jobs.view.WarehouseEventView;
 import br.com.mercadolivre.projetointegrador.warehouse.exception.ErrorDTO;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -72,7 +73,7 @@ public class WarehouseJobsController {
                             content = {
                                     @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = WarehouseListEventsResponseDTO.class))
+                                            array = @ArraySchema(schema = @Schema(implementation = WarehouseListEventsResponseDTO.class)))
                             })
             })
     @GetMapping("/jobs")
@@ -91,7 +92,7 @@ public class WarehouseJobsController {
                             content = {
                                     @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = WarehouseJobDTO[].class))
+                                            array = @ArraySchema(schema = @Schema(implementation = WarehouseJobDTO.class)))
                             })
             })
     @GetMapping("{warehouseId}/jobs")
@@ -112,7 +113,7 @@ public class WarehouseJobsController {
                             content = {
                                     @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = ExecutionResponseDTO[].class))
+                                            array = @ArraySchema(schema = @Schema(implementation = ExecutionResponseDTO.class)))
                             })
             })
     @PostMapping("/jobs/execute")

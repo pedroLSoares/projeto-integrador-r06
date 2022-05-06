@@ -8,10 +8,12 @@ import br.com.mercadolivre.projetointegrador.jobs.model.Job;
 import br.com.mercadolivre.projetointegrador.jobs.service.JobService;
 import br.com.mercadolivre.projetointegrador.warehouse.exception.ErrorDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/jobs")
 @RequiredArgsConstructor
+@Tag(name = "[Warehouse] - Jobs")
 public class JobController {
 
     private final JobService jobService;
@@ -37,7 +40,7 @@ public class JobController {
                             content = {
                                     @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = WarehouseJobCreatedDTO.class))
+                                            array = @ArraySchema(schema = @Schema(implementation = JobResponseDTO.class)))
                             })
             })
     @GetMapping
@@ -58,7 +61,7 @@ public class JobController {
                             content = {
                                     @Content(
                                             mediaType = "application/json",
-                                            schema = @Schema(implementation = WarehouseJobCreatedDTO.class))
+                                            schema = @Schema(implementation = JobResponseDTO.class))
                             }),
                     @ApiResponse(
                             responseCode = "409",
