@@ -38,6 +38,8 @@ E caso utilize o POSTMAN você pode importar a [collection](Doc/Projeto%20integr
 As definições das rotas também estão documentas no Swagger, que pode ser acessado pelo link:  
 http://localhost:8080/swagger-ui
 
+Todas as especificações de todos os requisitos se encontram no diretório de [documentações](Doc)
+
 ## Membros do grupo
 
 | Evandro | Icaro | Klinton | Maran |Paulo| Pedro | Thainan |
