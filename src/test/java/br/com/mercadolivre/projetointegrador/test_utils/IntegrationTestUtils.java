@@ -1,9 +1,9 @@
 package br.com.mercadolivre.projetointegrador.test_utils;
 
-import br.com.mercadolivre.projetointegrador.events.model.Event;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
-import br.com.mercadolivre.projetointegrador.events.repository.EventRepository;
-import br.com.mercadolivre.projetointegrador.events.repository.WarehouseEventRepository;
+import br.com.mercadolivre.projetointegrador.events.model.Job;
+import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.events.repository.JobRepository;
+import br.com.mercadolivre.projetointegrador.events.repository.WarehouseJobRepository;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CartProductDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreateOrUpdateAdDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreatePurchaseDTO;
@@ -54,9 +54,9 @@ public class IntegrationTestUtils {
 
   @Autowired private AppUserRepository appUserRepository;
 
-  @Autowired private EventRepository eventRepository;
+  @Autowired private JobRepository jobRepository;
 
-  @Autowired private WarehouseEventRepository warehouseEventRepository;
+  @Autowired private WarehouseJobRepository warehouseJobRepository;
 
   private final Random random = new Random();
   @Autowired private AdRepository adRepository;
@@ -358,17 +358,17 @@ public class IntegrationTestUtils {
     return dto;
   }
 
-  public Event createEvent(){
-    return eventRepository.save(new Event(null, "removeOldBatches", "removalEventExecutor", 0));
+  public Job createJob(){
+    return jobRepository.save(new Job(null, "removeOldBatches", "batchRemovalExecutor", 0));
   }
 
-  public WarehouseEvent createWarehouseEvent(){
-    Event event = createEvent();
+  public WarehouseJob createWarehouseEvent(){
+    Job job = createJob();
     Warehouse warehouse = createWarehouse();
     Product product = createProduct();
 
-    WarehouseEvent warehouseEvent = new WarehouseEvent(null, warehouse, event, new ArrayList<>(List.of(product)), null);
+    WarehouseJob warehouseJob = new WarehouseJob(null, warehouse, job, new ArrayList<>(List.of(product)), null);
 
-    return warehouseEventRepository.save(warehouseEvent);
+    return warehouseJobRepository.save(warehouseJob);
   }
 }

@@ -7,9 +7,9 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class WarehouseEventCreatedDTO {
+public class WarehouseJobCreatedDTO {
 
-    private Long idEvent;
+    private Long idJob;
     private Long idWarehouse;
     private String executionUri;
 }

@@ -3,16 +3,15 @@ package br.com.mercadolivre.projetointegrador.events.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-public class NewWarehouseEventDTO {
+public class UpdateJobProductsDTO {
 
-    public Long idEvent;
-    public Long idWarehouse;
+    private Long warehouseEventId;
     private List<Long> productList;
-
 }

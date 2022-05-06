@@ -1,7 +1,7 @@
 package br.com.mercadolivre.projetointegrador.security.configuration;
 
-import br.com.mercadolivre.projetointegrador.events.model.Event;
-import br.com.mercadolivre.projetointegrador.events.repository.EventRepository;
+import br.com.mercadolivre.projetointegrador.events.model.Job;
+import br.com.mercadolivre.projetointegrador.events.repository.JobRepository;
 import br.com.mercadolivre.projetointegrador.security.model.UserRole;
 import br.com.mercadolivre.projetointegrador.security.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class StartupConfiguration implements ApplicationListener<ContextRefreshe
   boolean alreadySetup = false;
 
   @Autowired private RolesRepository rolesRepository;
-  @Autowired private EventRepository eventRepository;
+  @Autowired private JobRepository jobRepository;
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -31,10 +31,10 @@ public class StartupConfiguration implements ApplicationListener<ContextRefreshe
           List.of(new UserRole(null, "CUSTOMER"), new UserRole(null, "MANAGER")));
     }
 
-    eventRepository.save(new Event(
+    jobRepository.save(new Job(
             null,
             "removeBatches",
-            "removalEventExecutor",
+            "batchRemovalExecutor",
             3
     ));
 

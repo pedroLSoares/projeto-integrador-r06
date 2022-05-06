@@ -10,5 +10,5 @@ import java.util.List;
 public class WarehouseListEventsResponseDTO {
 
     private Long warehouseId;
-    private List<EventResponseDTO> registeredEvents;
+    private List<JobResponseDTO> registeredJobs;
 }

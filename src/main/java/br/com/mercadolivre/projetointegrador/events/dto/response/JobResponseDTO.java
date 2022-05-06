@@ -4,18 +4,15 @@ import br.com.mercadolivre.projetointegrador.events.view.WarehouseEventView;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 @AllArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@JsonView(WarehouseEventView.WarehouseEventResponse.class)
-public class EventsExecutedDTO {
+@JsonView({WarehouseEventView.WarehouseEventListResponse.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
+public class JobResponseDTO {
 
-    private String event;
-    private List<Object> results;
+    private Long id;
+    private String name;
 }

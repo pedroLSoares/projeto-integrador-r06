@@ -1,10 +1,8 @@
 package br.com.mercadolivre.projetointegrador.events.dto.response;
 
-import br.com.mercadolivre.projetointegrador.events.model.Event;
 import br.com.mercadolivre.projetointegrador.events.view.WarehouseEventView;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.ProductDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.WarehouseResponseDTO;
-import br.com.mercadolivre.projetointegrador.warehouse.model.Warehouse;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @JsonView({WarehouseEventView.WarehouseEventDetailsResponse.class})
-public class WarehouseEventDTO {
+public class WarehouseJobDTO {
 
     @JsonView({WarehouseEventView.WarehouseEventListResponse.class})
     private Long id;
@@ -25,7 +23,7 @@ public class WarehouseEventDTO {
     private WarehouseResponseDTO warehouse;
 
     @JsonView({WarehouseEventView.WarehouseEventListResponse.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
-    private EventResponseDTO event;
+    private JobResponseDTO job;
 
     @JsonView({WarehouseEventView.WarehouseEventDetailsResponse.class})
     private List<ProductDTO> products;

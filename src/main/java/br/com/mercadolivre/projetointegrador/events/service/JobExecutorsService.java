@@ -1,6 +1,6 @@
 package br.com.mercadolivre.projetointegrador.events.service;
 
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
+import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.BatchResponseDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.mapper.BatchMapper;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Batch;
@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class EventExecutorsService {
+public class JobExecutorsService {
 
     private final BatchRepository batchRepository;
 
-    public List<BatchResponseDTO> removalEventExecutor(WarehouseEvent warehouseEvent){
-        Warehouse warehouse = warehouseEvent.getWarehouse();
+    public List<BatchResponseDTO> batchRemovalExecutor(WarehouseJob warehouseJob){
+        Warehouse warehouse = warehouseJob.getWarehouse();
 
-        List<Batch> batchList = batchRepository.findAllBySectionWarehouseAndProductIn(warehouse, warehouseEvent.getProducts());
+        List<Batch> batchList = batchRepository.findAllBySectionWarehouseAndProductIn(warehouse, warehouseJob.getProducts());
 
         List<Batch> toRemove = batchList.stream().filter(batch -> batch.getDueDate().isBefore(LocalDate.now().plusWeeks(3))).collect(Collectors.toList());
 

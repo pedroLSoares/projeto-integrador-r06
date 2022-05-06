@@ -1,8 +1,8 @@
 package br.com.mercadolivre.projetointegrador.unit.service;
 
-import br.com.mercadolivre.projetointegrador.events.model.Event;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
-import br.com.mercadolivre.projetointegrador.events.service.EventExecutorsService;
+import br.com.mercadolivre.projetointegrador.events.model.Job;
+import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.events.service.JobExecutorsService;
 import br.com.mercadolivre.projetointegrador.test_utils.WarehouseTestUtils;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.BatchResponseDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.enums.CategoryEnum;
@@ -24,13 +24,13 @@ import java.util.Date;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-public class EventExecutorsServiceTests {
+public class JobExecutorsServiceTests {
 
     @Mock
     private BatchRepository batchRepository;
 
     @InjectMocks
-    private EventExecutorsService executorsService;
+    private JobExecutorsService executorsService;
 
     @Test
     public void shouldRemoveAllBatchesWithLessThan3WeekOnDueDate(){
@@ -39,10 +39,10 @@ public class EventExecutorsServiceTests {
         mockedBatch.setDueDate(LocalDate.now());
 
 
-        WarehouseEvent mockEvent = new WarehouseEvent(
+        WarehouseJob mockEvent = new WarehouseJob(
                 1L,
                 new Warehouse(),
-                new Event(
+                new Job(
                         null,
                         "removeBatches",
                         "removalEventExecutor",
@@ -55,7 +55,7 @@ public class EventExecutorsServiceTests {
         Mockito.when(batchRepository.findAllBySectionWarehouseAndProductIn(Mockito.any(), Mockito.any())).thenReturn(new ArrayList<>(List.of(mockedBatch)));
 
 
-        List<BatchResponseDTO> result = executorsService.removalEventExecutor(mockEvent);
+        List<BatchResponseDTO> result = executorsService.batchRemovalExecutor(mockEvent);
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(mockedBatch.getId(), result.get(0).getId());

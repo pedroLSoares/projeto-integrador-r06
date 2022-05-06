@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Event {
+public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

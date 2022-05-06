@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WarehouseEvent {
+public class WarehouseJob {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,8 @@ public class WarehouseEvent {
     private Warehouse warehouse;
 
     @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "job_id")
+    private Job job;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

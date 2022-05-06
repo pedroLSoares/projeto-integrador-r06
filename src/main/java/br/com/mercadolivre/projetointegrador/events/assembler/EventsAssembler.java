@@ -1,11 +1,12 @@
 package br.com.mercadolivre.projetointegrador.events.assembler;
 
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseEventCreatedDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseEventDTO;
+import br.com.mercadolivre.projetointegrador.events.controller.WarehouseJobsController;
+import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseJobCreatedDTO;
+import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseJobDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseListEventsResponseDTO;
-import br.com.mercadolivre.projetointegrador.events.mapper.EventMapper;
-import br.com.mercadolivre.projetointegrador.events.mapper.WarehouseEventMapper;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
+import br.com.mercadolivre.projetointegrador.events.mapper.JobMapper;
+import br.com.mercadolivre.projetointegrador.events.mapper.WarehouseJobMapper;
+import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -14,34 +15,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 @Component
 public class EventsAssembler {
 
-    public ResponseEntity<WarehouseEventCreatedDTO> toEventCreatedResponse(WarehouseEvent event, HttpStatus status){
+    public ResponseEntity<WarehouseJobCreatedDTO> toEventCreatedResponse(WarehouseJob event, HttpStatus status){
 
 
-        WarehouseEventCreatedDTO dto = WarehouseEventCreatedDTO.builder()
-                .idEvent(event.getId())
+        WarehouseJobCreatedDTO dto = WarehouseJobCreatedDTO.builder()
+                .idJob(event.getId())
                 .idWarehouse(event.getWarehouse().getId())
                 .build();
 
+        dto.setExecutionUri(linkTo(methodOn(WarehouseJobsController.class).executeJobs()).toString());
+
 
         return ResponseEntity.status(status).body(dto);
     }
 
-    public ResponseEntity<WarehouseEventDTO> toWarehouseEventResponse(WarehouseEvent event, HttpStatus status){
-        WarehouseEventDTO dto = WarehouseEventMapper.INSTANCE.toDto(event);
+    public ResponseEntity<WarehouseJobDTO> toWarehouseEventResponse(WarehouseJob event, HttpStatus status){
+        WarehouseJobDTO dto = WarehouseJobMapper.INSTANCE.toDto(event);
         return ResponseEntity.status(status).body(dto);
     }
 
-    public ResponseEntity<List<WarehouseEventDTO>> toWarehouseEventResponse(List<WarehouseEvent> events, HttpStatus status){
+    public ResponseEntity<List<WarehouseJobDTO>> toWarehouseEventResponse(List<WarehouseJob> events, HttpStatus status){
 
-        return ResponseEntity.status(status).body(WarehouseEventMapper.INSTANCE.toDto(events));
+        return ResponseEntity.status(status).body(WarehouseJobMapper.INSTANCE.toDto(events));
     }
 
-    public ResponseEntity<List<WarehouseListEventsResponseDTO>> toWarehousesEventsResponse(List<WarehouseEvent> events, HttpStatus status){
+    public ResponseEntity<List<WarehouseListEventsResponseDTO>> toWarehousesEventsResponse(List<WarehouseJob> events, HttpStatus status){
         Map<Long, WarehouseListEventsResponseDTO> resultDto = new HashMap<>();
 
         events.forEach(event -> {
@@ -52,7 +58,7 @@ public class EventsAssembler {
             WarehouseListEventsResponseDTO dto = resultDto.get(warehouseId);
 
 
-            dto.getRegisteredEvents().add(EventMapper.INSTANCE.toDto(event.getEvent()));
+            dto.getRegisteredJobs().add(JobMapper.INSTANCE.toDto(event.getJob()));
         });
 
         var test = resultDto.values();

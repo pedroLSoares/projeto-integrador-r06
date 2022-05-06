@@ -1,10 +1,10 @@
 package br.com.mercadolivre.projetointegrador.integration.controller;
 
-import br.com.mercadolivre.projetointegrador.events.dto.request.UpdateEventProductsDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseEventDTO;
-import br.com.mercadolivre.projetointegrador.events.model.Event;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
-import br.com.mercadolivre.projetointegrador.events.repository.WarehouseEventRepository;
+import br.com.mercadolivre.projetointegrador.events.dto.request.UpdateJobProductsDTO;
+import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseJobDTO;
+import br.com.mercadolivre.projetointegrador.events.model.Job;
+import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.events.repository.WarehouseJobRepository;
 import br.com.mercadolivre.projetointegrador.test_utils.IntegrationTestUtils;
 import br.com.mercadolivre.projetointegrador.test_utils.WithMockManagerUser;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Batch;
@@ -37,7 +37,7 @@ import java.util.Optional;
 @ActiveProfiles(profiles = "test")
 @WithMockManagerUser
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class WarehouseEventControllerTests {
+public class WarehouseJobsControllerTests {
 
     private final String CONTROLLER_URL = "/api/v1/warehouse";
 
@@ -46,16 +46,16 @@ public class WarehouseEventControllerTests {
     @Autowired private MockMvc mockMvc;
     @Autowired private IntegrationTestUtils integrationTestUtils;
     @Autowired private BatchRepository batchRepository;
-    @Autowired private WarehouseEventRepository warehouseEventRepository;
+    @Autowired private WarehouseJobRepository warehouseJobRepository;
 
     @Test
     public void shouldRegisterNewEventIntoWarehouse() throws Exception {
-        Event event = integrationTestUtils.createEvent();
+        Job job = integrationTestUtils.createJob();
         Warehouse warehouse = integrationTestUtils.createWarehouse();
-        NewWarehouseEventDTO payloadDTO = new NewWarehouseEventDTO(event.getId(), warehouse.getId(), new ArrayList<>());
+        NewWarehouseJobDTO payloadDTO = new NewWarehouseJobDTO(job.getId(), warehouse.getId(), new ArrayList<>());
 
         mockMvc
-                .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/events")
+                .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/jobs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(payloadDTO)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -66,10 +66,10 @@ public class WarehouseEventControllerTests {
     public void shouldNotRegisterAnyDataWhenNotFindEvent() throws Exception {
 
         Warehouse warehouse = integrationTestUtils.createWarehouse();
-        NewWarehouseEventDTO payloadDTO = new NewWarehouseEventDTO(99999L, warehouse.getId(), new ArrayList<>());
+        NewWarehouseJobDTO payloadDTO = new NewWarehouseJobDTO(99999L, warehouse.getId(), new ArrayList<>());
 
         mockMvc
-                .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/events")
+                .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/jobs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(payloadDTO)))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -82,19 +82,19 @@ public class WarehouseEventControllerTests {
         integrationTestUtils.createWarehouseEvent();
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/events"))
+                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/jobs"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].registeredEvents").isNotEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].registeredJobs").isNotEmpty());
 
     }
 
     @Test
     public void shouldListAllEventsFromWarehouse() throws Exception {
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/" + warehouseEvent.getWarehouse().getId() +"/events"))
+                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/" + warehouseJob.getWarehouse().getId() +"/jobs"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty());
     }
@@ -102,14 +102,14 @@ public class WarehouseEventControllerTests {
 
     @Test
     public void shouldRemoveAllBatchesThatHasDueDateLassThan3Weeks() throws Exception {
-        warehouseEventRepository.deleteAll();
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
-        Section section = integrationTestUtils.createSection(warehouseEvent.getWarehouse());
+        warehouseJobRepository.deleteAll();
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
+        Section section = integrationTestUtils.createSection(warehouseJob.getWarehouse());
 
-        Batch batch = integrationTestUtils.createBatch(section, LocalDate.now(), warehouseEvent.getProducts().get(0));
+        Batch batch = integrationTestUtils.createBatch(section, LocalDate.now(), warehouseJob.getProducts().get(0));
 
         mockMvc
-                .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/events/execute"))
+                .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/jobs/execute"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty());
 
@@ -121,48 +121,48 @@ public class WarehouseEventControllerTests {
 
     @Test
     public void shouldReturnWarehouseEventDetails() throws Exception {
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
 
         mockMvc
-                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/events/detail/" + warehouseEvent.getId()))
+                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/jobs/detail/" + warehouseJob.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.event.name").value(warehouseEvent.getEvent().getName()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.job.name").value(warehouseJob.getJob().getName()));
     }
 
     @Test
     public void shouldReturnNotFoundWhenEventNotExists() throws Exception {
         mockMvc
-                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/events/detail/" + 999))
+                .perform(MockMvcRequestBuilders.get(CONTROLLER_URL + "/jobs/detail/" + 999))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Não encontrado"));
     }
 
     @Test
     public void shouldAddProductIntoWarehouseEvent() throws Exception {
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
         Product product = integrationTestUtils.createProduct();
 
-        UpdateEventProductsDTO body = new UpdateEventProductsDTO(warehouseEvent.getId(), List.of(product.getId()));
+        UpdateJobProductsDTO body = new UpdateJobProductsDTO(warehouseJob.getId(), List.of(product.getId()));
 
         mockMvc
-                .perform(MockMvcRequestBuilders.patch(CONTROLLER_URL + "/events/products")
+                .perform(MockMvcRequestBuilders.patch(CONTROLLER_URL + "/jobs/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(body)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        WarehouseEvent event = warehouseEventRepository.findById(warehouseEvent.getId()).orElse(new WarehouseEvent());
+        WarehouseJob event = warehouseJobRepository.findById(warehouseJob.getId()).orElse(new WarehouseJob());
 
         Assertions.assertTrue(event.getProducts().contains(product));
     }
 
     @Test
     public void shouldNotAddProductIntoWarehouseEventWhenReceiveInvalidIds() throws Exception {
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
 
-        UpdateEventProductsDTO body = new UpdateEventProductsDTO(warehouseEvent.getId(), List.of(99999L));
+        UpdateJobProductsDTO body = new UpdateJobProductsDTO(warehouseJob.getId(), List.of(99999L));
 
         mockMvc
-                .perform(MockMvcRequestBuilders.patch(CONTROLLER_URL + "/events/products")
+                .perform(MockMvcRequestBuilders.patch(CONTROLLER_URL + "/jobs/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body)))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -171,30 +171,30 @@ public class WarehouseEventControllerTests {
 
     @Test
     public void shouldRemoveWarehouseEvent() throws Exception {
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
 
-        mockMvc.perform(MockMvcRequestBuilders.delete(CONTROLLER_URL + "/events/{id}", warehouseEvent.getId()))
+        mockMvc.perform(MockMvcRequestBuilders.delete(CONTROLLER_URL + "/jobs/{id}", warehouseJob.getId()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
-        Optional<WarehouseEvent> event = warehouseEventRepository.findById(warehouseEvent.getId());
+        Optional<WarehouseJob> event = warehouseJobRepository.findById(warehouseJob.getId());
 
         Assertions.assertTrue(event.isEmpty());
     }
 
     @Test
     public void shouldRemoveWarehouseEventProducts() throws Exception {
-        WarehouseEvent warehouseEvent = integrationTestUtils.createWarehouseEvent();
-        Product toRemove = warehouseEvent.getProducts().get(0);
+        WarehouseJob warehouseJob = integrationTestUtils.createWarehouseEvent();
+        Product toRemove = warehouseJob.getProducts().get(0);
 
-        UpdateEventProductsDTO body = new UpdateEventProductsDTO(warehouseEvent.getId(), List.of(toRemove.getId()));
+        UpdateJobProductsDTO body = new UpdateJobProductsDTO(warehouseJob.getId(), List.of(toRemove.getId()));
 
         mockMvc
-                .perform(MockMvcRequestBuilders.delete(CONTROLLER_URL + "/events/products")
+                .perform(MockMvcRequestBuilders.delete(CONTROLLER_URL + "/jobs/products")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
-        WarehouseEvent event = warehouseEventRepository.findById(warehouseEvent.getId()).orElse(new WarehouseEvent());
+        WarehouseJob event = warehouseJobRepository.findById(warehouseJob.getId()).orElse(new WarehouseJob());
 
         Assertions.assertFalse(event.getProducts().contains(toRemove));
     }

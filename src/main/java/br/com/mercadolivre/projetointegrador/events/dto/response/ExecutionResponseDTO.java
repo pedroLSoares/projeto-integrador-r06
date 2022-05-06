@@ -15,5 +15,5 @@ import java.util.List;
 public class ExecutionResponseDTO {
 
     private Long warehouseId;
-    private List<EventsExecutedDTO> eventsExecuted;
+    private List<JobsExecutedDTO> jobsExecuted;
 }
