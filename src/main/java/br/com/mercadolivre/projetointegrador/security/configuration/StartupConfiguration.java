@@ -34,8 +34,7 @@ public class StartupConfiguration implements ApplicationListener<ContextRefreshe
     jobRepository.save(new Job(
             null,
             "removeBatches",
-            "batchRemovalExecutor",
-            3
+            "batchRemovalExecutor"
     ));
 
     alreadySetup = true;

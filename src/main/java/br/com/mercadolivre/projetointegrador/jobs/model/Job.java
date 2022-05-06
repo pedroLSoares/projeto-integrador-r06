@@ -21,9 +21,7 @@ public class Job {
     @Column
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String executor;
 
-    @Column
-    private Integer executionPeriod;
 }

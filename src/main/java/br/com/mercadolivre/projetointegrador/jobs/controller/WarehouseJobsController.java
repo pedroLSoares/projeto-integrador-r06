@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/warehouse")
 @RequiredArgsConstructor
-@Tag(name = "[Warehouse] - Jobs")
+@Tag(name = "[Warehouse] - Warehouse Jobs")
 public class WarehouseJobsController {
 
     private final WarehouseJobService eventService;

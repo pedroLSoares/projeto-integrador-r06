@@ -45,8 +45,7 @@ public class JobExecutorsServiceTests {
                 new Job(
                         null,
                         "removeBatches",
-                        "removalEventExecutor",
-                        3
+                        "removalEventExecutor"
                 ),
                 new ArrayList<>(List.of(mockedProduct)),
                 null

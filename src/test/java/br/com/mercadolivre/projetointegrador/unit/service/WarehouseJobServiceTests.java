@@ -122,8 +122,7 @@ public class WarehouseJobServiceTests {
         Job mockedJob = new Job(
                 null,
                 "removeBatches",
-                "batchRemovalExecutor",
-                3
+                "batchRemovalExecutor"
         );
         Product mockedProduct = new Product(1L, "mocked", CategoryEnum.FS, new Date());
         WarehouseJob expected = new WarehouseJob(1L, new Warehouse(), mockedJob, new ArrayList<>(List.of(mockedProduct)), null);

@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -88,29 +85,26 @@ public class WarehouseJobService {
         Map<Long, ExecutionResponseDTO> response = new HashMap<>();
 
         eventList.forEach(event -> {
+            Long warehouseId = event.getWarehouse().getId();
+            JobsExecutedDTO jobsExecutedDTO = new JobsExecutedDTO();
+            ExecutionResponseDTO dto = response.computeIfAbsent(warehouseId, (k) -> new ExecutionResponseDTO(warehouseId, new ArrayList<>()));
             try {
-                Long warehouseId = event.getWarehouse().getId();
-                ExecutionResponseDTO dto = response.computeIfAbsent(warehouseId, (k) -> new ExecutionResponseDTO(warehouseId, new ArrayList<>()));
-
-                JobsExecutedDTO jobsExecutedDTO = new JobsExecutedDTO();
                 jobsExecutedDTO.setJob(event.getJob().getName());
                 Method mtd = executorsService.getClass().getMethod(event.getJob().getExecutor(), WarehouseJob.class);
                 jobsExecutedDTO.setResults((List<Object>) mtd.invoke(executorsService, event));
                 event.setLastExecution(LocalDateTime.now());
 
                 warehouseJobRepository.save(event);
-
                 dto.getJobsExecuted().add(jobsExecutedDTO);
 
                 response.put(warehouseId, dto);
 
+            } catch (NoSuchMethodException e) {
+                jobsExecutedDTO.setResults(List.of("Método executor " + event.getJob().getExecutor() + " não implementado"));
 
-
-
-
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
-
+                jobsExecutedDTO.setResults(List.of("Houve um problema ao chamar o executor " + event.getJob().getExecutor()));
             }
 
         });

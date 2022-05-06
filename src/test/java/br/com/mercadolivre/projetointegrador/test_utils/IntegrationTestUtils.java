@@ -33,6 +33,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -359,7 +360,8 @@ public class IntegrationTestUtils {
   }
 
   public Job createJob(){
-    return jobRepository.save(new Job(null, "removeOldBatches", "batchRemovalExecutor", 0));
+    Optional<Job> existent = jobRepository.findByExecutor("batchRemovalExecutor");
+    return existent.orElseGet(() -> jobRepository.save(new Job(null, "removeOldBatches", "batchRemovalExecutor")));
   }
 
   public WarehouseJob createWarehouseEvent(){

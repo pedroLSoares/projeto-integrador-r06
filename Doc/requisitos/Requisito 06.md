@@ -31,7 +31,16 @@ docker-compose -f docker/docker-compose.yaml up -d
 ### Observações
  **Para execução correta das rotas, é necessário que um job e seu método executor estejam devidamente cadastrados na table de job no banco de dados.**
 
+O Job necessário é automaticamente cadastrado ao iniciar o projeto, porém também pode cadastrá-lo manualmente utilizando o endpoint e body
 
+**Atente-se para o nome do executor, visto que o método com mesmo nome deve existir**
+
+```shell
+curl -X POST http://localhost:8080/api/v1/jobs -H "Authorization: Bearer {TOKEN}" -H "Content-Type: application/json" -d '{
+    "name": "removeBatches,
+    "executor": "batchRemovalExecutor
+}'
+```
 
 ### Vincular o job na warehouse
 ```shell
