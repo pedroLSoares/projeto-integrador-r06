@@ -8,9 +8,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-@Setter
 public class UpdateJobProductsDTO {
 
-    private Long warehouseEventId;
-    private List<Long> productList;
+    private final Long warehouseEventId;
+    private final List<Long> productList;
 }

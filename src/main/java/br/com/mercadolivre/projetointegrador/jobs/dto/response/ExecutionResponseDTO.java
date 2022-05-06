@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @JsonView(WarehouseEventView.WarehouseEventResponse.class)
 public class ExecutionResponseDTO {
 
-    private Long warehouseId;
-    private List<JobsExecutedDTO> jobsExecuted;
+    private final Long warehouseId;
+    private final List<JobsExecutedDTO> jobsExecuted;
 }

@@ -13,21 +13,20 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-@Setter
 @JsonView({WarehouseEventView.WarehouseEventDetailsResponse.class})
 public class WarehouseJobDTO {
 
     @JsonView({WarehouseEventView.WarehouseEventListResponse.class})
-    private Long id;
+    private final Long id;
 
-    private WarehouseResponseDTO warehouse;
+    private final WarehouseResponseDTO warehouse;
 
     @JsonView({WarehouseEventView.WarehouseEventListResponse.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
-    private JobResponseDTO job;
+    private final JobResponseDTO job;
 
     @JsonView({WarehouseEventView.WarehouseEventDetailsResponse.class})
-    private List<ProductDTO> products;
+    private final List<ProductDTO> products;
 
     @JsonView({WarehouseEventView.WarehouseEventListResponse.class})
-    private LocalDateTime lastExecution;
+    private final LocalDateTime lastExecution;
 }

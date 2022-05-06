@@ -9,10 +9,9 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
-@Setter
 @JsonView({WarehouseEventView.WarehouseEventListResponse.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
 public class JobResponseDTO {
 
-    private Long id;
-    private String name;
+    private final Long id;
+    private final String name;
 }

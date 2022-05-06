@@ -6,9 +6,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-@Setter
 public class WarehouseListEventsResponseDTO {
 
-    private Long warehouseId;
-    private List<JobResponseDTO> registeredJobs;
+    private final Long warehouseId;
+    private final List<JobResponseDTO> registeredJobs;
 }

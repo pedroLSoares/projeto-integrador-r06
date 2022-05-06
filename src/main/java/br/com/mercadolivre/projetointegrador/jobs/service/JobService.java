@@ -1,6 +1,6 @@
 package br.com.mercadolivre.projetointegrador.jobs.service;
 
-import br.com.mercadolivre.projetointegrador.jobs.exceptions.ExecutorNotImplemented;
+import br.com.mercadolivre.projetointegrador.jobs.exceptions.JobExecutorException;
 import br.com.mercadolivre.projetointegrador.jobs.model.Job;
 import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
 import br.com.mercadolivre.projetointegrador.jobs.repository.JobRepository;
@@ -29,7 +29,7 @@ public class JobService {
             JobExecutorsService.class.getMethod(job.getExecutor(), WarehouseJob.class);
             return jobRepository.save(job);
         } catch (NoSuchMethodException e) {
-            throw new ExecutorNotImplemented("Método executor não implementado");
+            throw new JobExecutorException("Método executor não implementado");
         }
     }
 }

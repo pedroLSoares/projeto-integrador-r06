@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,6 +73,6 @@ public class JobController {
     public ResponseEntity<JobResponseDTO> createJob(@RequestBody @Valid NewJobDTO newJobDTO){
         Job created = jobService.createJob(JobMapper.INSTANCE.toModel(newJobDTO));
 
-        return ResponseEntity.ok(JobMapper.INSTANCE.toDto(created));
+        return ResponseEntity.status(HttpStatus.CREATED).body(JobMapper.INSTANCE.toDto(created));
     }
 }

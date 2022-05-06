@@ -7,12 +7,11 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class NewWarehouseJobDTO {
 
     public Long idEvent;
     public Long idWarehouse;
-    private List<Long> productList;
+    private final List<Long> productList;
 
 }
