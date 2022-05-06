@@ -1,4 +1,4 @@
-package br.com.mercadolivre.projetointegrador.events.dto.request;
+package br.com.mercadolivre.projetointegrador.jobs.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

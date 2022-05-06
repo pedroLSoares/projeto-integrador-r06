@@ -1,7 +1,7 @@
-package br.com.mercadolivre.projetointegrador.events.mapper;
+package br.com.mercadolivre.projetointegrador.jobs.mapper;
 
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseJobDTO;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.dto.response.WarehouseJobDTO;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
 import br.com.mercadolivre.projetointegrador.warehouse.mapper.ProductMapper;
 import br.com.mercadolivre.projetointegrador.warehouse.mapper.WarehouseMapper;
 import org.mapstruct.Mapper;

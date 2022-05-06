@@ -1,7 +1,7 @@
 package br.com.mercadolivre.projetointegrador.security.configuration;
 
-import br.com.mercadolivre.projetointegrador.events.model.Job;
-import br.com.mercadolivre.projetointegrador.events.repository.JobRepository;
+import br.com.mercadolivre.projetointegrador.jobs.model.Job;
+import br.com.mercadolivre.projetointegrador.jobs.repository.JobRepository;
 import br.com.mercadolivre.projetointegrador.security.model.UserRole;
 import br.com.mercadolivre.projetointegrador.security.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;

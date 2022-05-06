@@ -1,6 +1,6 @@
-package br.com.mercadolivre.projetointegrador.events.repository;
+package br.com.mercadolivre.projetointegrador.jobs.repository;
 
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

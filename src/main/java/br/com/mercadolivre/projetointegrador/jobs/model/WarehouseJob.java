@@ -1,4 +1,4 @@
-package br.com.mercadolivre.projetointegrador.events.model;
+package br.com.mercadolivre.projetointegrador.jobs.model;
 
 import br.com.mercadolivre.projetointegrador.warehouse.model.Product;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Warehouse;

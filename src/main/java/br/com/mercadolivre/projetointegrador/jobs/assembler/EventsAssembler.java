@@ -1,12 +1,12 @@
-package br.com.mercadolivre.projetointegrador.events.assembler;
+package br.com.mercadolivre.projetointegrador.jobs.assembler;
 
-import br.com.mercadolivre.projetointegrador.events.controller.WarehouseJobsController;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseJobCreatedDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseJobDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseListEventsResponseDTO;
-import br.com.mercadolivre.projetointegrador.events.mapper.JobMapper;
-import br.com.mercadolivre.projetointegrador.events.mapper.WarehouseJobMapper;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.controller.WarehouseJobsController;
+import br.com.mercadolivre.projetointegrador.jobs.dto.response.WarehouseJobCreatedDTO;
+import br.com.mercadolivre.projetointegrador.jobs.dto.response.WarehouseJobDTO;
+import br.com.mercadolivre.projetointegrador.jobs.dto.response.WarehouseListEventsResponseDTO;
+import br.com.mercadolivre.projetointegrador.jobs.mapper.JobMapper;
+import br.com.mercadolivre.projetointegrador.jobs.mapper.WarehouseJobMapper;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

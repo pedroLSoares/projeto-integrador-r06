@@ -1,4 +1,4 @@
-package br.com.mercadolivre.projetointegrador.events.dto.response;
+package br.com.mercadolivre.projetointegrador.jobs.dto.response;
 
 import lombok.*;
 

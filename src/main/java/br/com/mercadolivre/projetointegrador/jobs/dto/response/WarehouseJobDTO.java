@@ -1,6 +1,6 @@
-package br.com.mercadolivre.projetointegrador.events.dto.response;
+package br.com.mercadolivre.projetointegrador.jobs.dto.response;
 
-import br.com.mercadolivre.projetointegrador.events.view.WarehouseEventView;
+import br.com.mercadolivre.projetointegrador.jobs.view.WarehouseEventView;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.ProductDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.WarehouseResponseDTO;
 import com.fasterxml.jackson.annotation.JsonView;

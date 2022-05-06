@@ -1,12 +1,12 @@
-package br.com.mercadolivre.projetointegrador.events.controller;
+package br.com.mercadolivre.projetointegrador.jobs.controller;
 
-import br.com.mercadolivre.projetointegrador.events.dto.request.UpdateJobProductsDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseJobDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.*;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
-import br.com.mercadolivre.projetointegrador.events.service.WarehouseJobService;
-import br.com.mercadolivre.projetointegrador.events.assembler.EventsAssembler;
-import br.com.mercadolivre.projetointegrador.events.view.WarehouseEventView;
+import br.com.mercadolivre.projetointegrador.jobs.dto.request.UpdateJobProductsDTO;
+import br.com.mercadolivre.projetointegrador.jobs.dto.request.NewWarehouseJobDTO;
+import br.com.mercadolivre.projetointegrador.jobs.dto.response.*;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.service.WarehouseJobService;
+import br.com.mercadolivre.projetointegrador.jobs.assembler.EventsAssembler;
+import br.com.mercadolivre.projetointegrador.jobs.view.WarehouseEventView;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package br.com.mercadolivre.projetointegrador.events.model;
+package br.com.mercadolivre.projetointegrador.jobs.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,9 +1,9 @@
 package br.com.mercadolivre.projetointegrador.test_utils;
 
-import br.com.mercadolivre.projetointegrador.events.model.Job;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
-import br.com.mercadolivre.projetointegrador.events.repository.JobRepository;
-import br.com.mercadolivre.projetointegrador.events.repository.WarehouseJobRepository;
+import br.com.mercadolivre.projetointegrador.jobs.model.Job;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.repository.JobRepository;
+import br.com.mercadolivre.projetointegrador.jobs.repository.WarehouseJobRepository;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CartProductDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreateOrUpdateAdDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreatePurchaseDTO;

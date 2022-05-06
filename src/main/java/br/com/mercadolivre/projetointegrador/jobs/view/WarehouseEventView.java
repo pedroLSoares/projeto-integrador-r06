@@ -1,4 +1,4 @@
-package br.com.mercadolivre.projetointegrador.events.view;
+package br.com.mercadolivre.projetointegrador.jobs.view;
 
 public class WarehouseEventView {
 

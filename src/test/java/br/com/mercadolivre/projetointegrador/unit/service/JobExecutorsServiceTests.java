@@ -1,8 +1,8 @@
 package br.com.mercadolivre.projetointegrador.unit.service;
 
-import br.com.mercadolivre.projetointegrador.events.model.Job;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
-import br.com.mercadolivre.projetointegrador.events.service.JobExecutorsService;
+import br.com.mercadolivre.projetointegrador.jobs.model.Job;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.service.JobExecutorsService;
 import br.com.mercadolivre.projetointegrador.test_utils.WarehouseTestUtils;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.BatchResponseDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.enums.CategoryEnum;

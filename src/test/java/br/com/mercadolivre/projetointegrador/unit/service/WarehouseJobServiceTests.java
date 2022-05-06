@@ -1,13 +1,13 @@
 package br.com.mercadolivre.projetointegrador.unit.service;
 
-import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseJobDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.ExecutionResponseDTO;
-import br.com.mercadolivre.projetointegrador.events.model.Job;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
-import br.com.mercadolivre.projetointegrador.events.repository.WarehouseJobRepository;
-import br.com.mercadolivre.projetointegrador.events.service.JobExecutorsService;
-import br.com.mercadolivre.projetointegrador.events.service.JobService;
-import br.com.mercadolivre.projetointegrador.events.service.WarehouseJobService;
+import br.com.mercadolivre.projetointegrador.jobs.dto.request.NewWarehouseJobDTO;
+import br.com.mercadolivre.projetointegrador.jobs.dto.response.ExecutionResponseDTO;
+import br.com.mercadolivre.projetointegrador.jobs.model.Job;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.repository.WarehouseJobRepository;
+import br.com.mercadolivre.projetointegrador.jobs.service.JobExecutorsService;
+import br.com.mercadolivre.projetointegrador.jobs.service.JobService;
+import br.com.mercadolivre.projetointegrador.jobs.service.WarehouseJobService;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.BatchResponseDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.enums.CategoryEnum;
 import br.com.mercadolivre.projetointegrador.warehouse.exception.db.NotFoundException;

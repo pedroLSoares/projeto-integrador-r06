@@ -1,6 +1,6 @@
 package br.com.mercadolivre.projetointegrador.warehouse.dto.response;
 
-import br.com.mercadolivre.projetointegrador.events.view.WarehouseEventView;
+import br.com.mercadolivre.projetointegrador.jobs.view.WarehouseEventView;
 import br.com.mercadolivre.projetointegrador.warehouse.enums.CategoryEnum;
 import br.com.mercadolivre.projetointegrador.warehouse.view.ProductView;
 import com.fasterxml.jackson.annotation.JsonView;

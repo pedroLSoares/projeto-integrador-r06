@@ -1,6 +1,6 @@
-package br.com.mercadolivre.projetointegrador.events.service;
+package br.com.mercadolivre.projetointegrador.jobs.service;
 
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
 import br.com.mercadolivre.projetointegrador.warehouse.dto.response.BatchResponseDTO;
 import br.com.mercadolivre.projetointegrador.warehouse.mapper.BatchMapper;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Batch;

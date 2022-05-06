@@ -1,10 +1,10 @@
 package br.com.mercadolivre.projetointegrador.integration.controller;
 
-import br.com.mercadolivre.projetointegrador.events.dto.request.UpdateJobProductsDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseJobDTO;
-import br.com.mercadolivre.projetointegrador.events.model.Job;
-import br.com.mercadolivre.projetointegrador.events.model.WarehouseJob;
-import br.com.mercadolivre.projetointegrador.events.repository.WarehouseJobRepository;
+import br.com.mercadolivre.projetointegrador.jobs.dto.request.UpdateJobProductsDTO;
+import br.com.mercadolivre.projetointegrador.jobs.dto.request.NewWarehouseJobDTO;
+import br.com.mercadolivre.projetointegrador.jobs.model.Job;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.repository.WarehouseJobRepository;
 import br.com.mercadolivre.projetointegrador.test_utils.IntegrationTestUtils;
 import br.com.mercadolivre.projetointegrador.test_utils.WithMockManagerUser;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Batch;
