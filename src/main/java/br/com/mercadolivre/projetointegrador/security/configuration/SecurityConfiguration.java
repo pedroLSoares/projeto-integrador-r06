@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers("/api/v1/marketplace/**")
         .hasAuthority("CUSTOMER")
-        .antMatchers("/api/v1/warehouse/**")
+        .antMatchers("/api/v1/warehouse/**", "/api/v1/jobs")
         .access("hasAuthority('MANAGER')")
         .anyRequest()
         .authenticated()

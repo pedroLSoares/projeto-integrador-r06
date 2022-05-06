@@ -3,6 +3,7 @@ package br.com.mercadolivre.projetointegrador.warehouse.repository;
 import br.com.mercadolivre.projetointegrador.warehouse.enums.CategoryEnum;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Batch;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Product;
+import br.com.mercadolivre.projetointegrador.warehouse.model.Warehouse;
 import br.com.mercadolivre.projetointegrador.warehouse.model.Section;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,9 +22,9 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
 
   List<Batch> findAllBySection_IdIn(List<Long> ids);
 
-  List<Batch> findAllBySectionIdAndDueDateLessThan(Long id, LocalDate date);
+  List<Batch> findAllBySectionWarehouseAndProductIn(Warehouse warehouse, List<Product> product);
 
-  List<Batch> findBatchByProductAndSection(Product product, Section section, Sort sort);
+  List<Batch> findAllBySectionIdAndDueDateLessThan(Long id, LocalDate date);
 
   List<Batch> findAllByDueDateLessThanAndProductCategoryOrderByDueDate(
       LocalDate date, CategoryEnum category);
@@ -37,4 +38,5 @@ public interface BatchRepository extends JpaRepository<Batch, Long> {
 
   List<Batch> findBatchByProductAndSectionAndDueDateGreaterThan(
       Product product, Section section, Sort sort, LocalDate date);
+
 }

@@ -1,5 +1,6 @@
 package br.com.mercadolivre.projetointegrador.warehouse.dto.response;
 
+import br.com.mercadolivre.projetointegrador.jobs.view.WarehouseEventView;
 import br.com.mercadolivre.projetointegrador.warehouse.enums.CategoryEnum;
 import br.com.mercadolivre.projetointegrador.warehouse.view.ProductView;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -14,15 +15,16 @@ import java.util.Map;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonView({WarehouseEventView.WarehouseEventResponse.class})
 public class ProductDTO {
 
-  @JsonView(ProductView.Detail.class)
+  @JsonView({ProductView.Detail.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
   private Long id;
 
-  @JsonView({ProductView.Detail.class, ProductView.List.class})
+  @JsonView({ProductView.Detail.class, ProductView.List.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
   private String name;
 
-  @JsonView({ProductView.Detail.class, ProductView.List.class})
+  @JsonView({ProductView.Detail.class, ProductView.List.class, WarehouseEventView.WarehouseEventDetailsResponse.class})
   private CategoryEnum category;
 
   @JsonView(ProductView.Detail.class)

@@ -1,5 +1,9 @@
 package br.com.mercadolivre.projetointegrador.test_utils;
 
+import br.com.mercadolivre.projetointegrador.jobs.model.Job;
+import br.com.mercadolivre.projetointegrador.jobs.model.WarehouseJob;
+import br.com.mercadolivre.projetointegrador.jobs.repository.JobRepository;
+import br.com.mercadolivre.projetointegrador.jobs.repository.WarehouseJobRepository;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CartProductDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreateOrUpdateAdDTO;
 import br.com.mercadolivre.projetointegrador.marketplace.dtos.CreatePurchaseDTO;
@@ -29,6 +33,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -49,6 +54,10 @@ public class IntegrationTestUtils {
   @Autowired private RedisRepository redisRepository;
 
   @Autowired private AppUserRepository appUserRepository;
+
+  @Autowired private JobRepository jobRepository;
+
+  @Autowired private WarehouseJobRepository warehouseJobRepository;
 
   private final Random random = new Random();
   @Autowired private AdRepository adRepository;
@@ -89,6 +98,19 @@ public class IntegrationTestUtils {
             1000,
             CategoryEnum.FS,
             null));
+  }
+
+  public Section createSection(Warehouse warehouse) {
+    return sectionRepository.save(
+            new Section(
+                    null,
+                    warehouse,
+                    1L,
+                    BigDecimal.valueOf(33.33),
+                    BigDecimal.ZERO,
+                    1000,
+                    CategoryEnum.FS,
+                    null));
   }
 
   public Product createProduct() {
@@ -194,6 +216,22 @@ public class IntegrationTestUtils {
             .batchNumber(9595)
             .quantity(10)
             .build();
+
+    return batchRepository.save(batch);
+  }
+
+  public Batch createBatch(Section section, LocalDate dueDate, Product product) {
+    Batch batch =
+            Batch.builder()
+                    .product(product)
+                    .section(section)
+                    .seller(createUser())
+                    .price(BigDecimal.TEN)
+                    .order_number(123)
+                    .batchNumber(9595)
+                    .quantity(10)
+                    .dueDate(dueDate)
+                    .build();
 
     return batchRepository.save(batch);
   }
@@ -319,5 +357,20 @@ public class IntegrationTestUtils {
     dto.setWarehouses(productInWarehouseList);
 
     return dto;
+  }
+
+  public Job createJob(){
+    Optional<Job> existent = jobRepository.findByExecutor("batchRemovalExecutor");
+    return existent.orElseGet(() -> jobRepository.save(new Job(null, "removeOldBatches", "batchRemovalExecutor")));
+  }
+
+  public WarehouseJob createWarehouseEvent(){
+    Job job = createJob();
+    Warehouse warehouse = createWarehouse();
+    Product product = createProduct();
+
+    WarehouseJob warehouseJob = new WarehouseJob(null, warehouse, job, new ArrayList<>(List.of(product)), null);
+
+    return warehouseJobRepository.save(warehouseJob);
   }
 }
