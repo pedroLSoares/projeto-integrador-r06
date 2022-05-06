@@ -2,6 +2,7 @@ package br.com.mercadolivre.projetointegrador.unit.service;
 
 import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseEventDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.response.EventsExecutedDTO;
+import br.com.mercadolivre.projetointegrador.events.dto.response.ExecutionResponseDTO;
 import br.com.mercadolivre.projetointegrador.events.model.Event;
 import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
 import br.com.mercadolivre.projetointegrador.events.repository.WarehouseEventRepository;
@@ -132,9 +133,9 @@ public class WarehouseEventServiceTests {
         Mockito.when(executorsService.removalEventExecutor(Mockito.any())).thenReturn(List.of(new BatchResponseDTO()));
         Mockito.when(warehouseEventRepository.save(Mockito.any())).thenReturn(expected);
 
-        List<EventsExecutedDTO> result = warehouseEventService.executeEvents();
+        List<ExecutionResponseDTO> result = warehouseEventService.executeEvents();
 
-        Assertions.assertTrue(result.get(0).getResults().size() > 0);
+        Assertions.assertTrue(result.get(0).getEventsExecuted().get(0).getResults().size() > 0);
         Mockito.verify(warehouseEventRepository, Mockito.times(1)).save(expected);
         Mockito.verify(executorsService, Mockito.times(1)).removalEventExecutor(Mockito.any());
     }

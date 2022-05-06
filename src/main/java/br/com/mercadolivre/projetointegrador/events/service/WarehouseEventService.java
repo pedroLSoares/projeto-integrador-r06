@@ -2,6 +2,7 @@ package br.com.mercadolivre.projetointegrador.events.service;
 
 import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseEventDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.response.EventsExecutedDTO;
+import br.com.mercadolivre.projetointegrador.events.dto.response.ExecutionResponseDTO;
 import br.com.mercadolivre.projetointegrador.events.model.Event;
 import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
 import br.com.mercadolivre.projetointegrador.events.repository.WarehouseEventRepository;
@@ -21,7 +22,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,11 +89,15 @@ public class WarehouseEventService {
         return warehouseEventRepository.save(warehouseEvent);
     }
 
-    public List<EventsExecutedDTO> executeEvents(){
+    public List<ExecutionResponseDTO> executeEvents(){
         List<WarehouseEvent> eventList = warehouseEventRepository.findAll();
+        Map<Long, ExecutionResponseDTO> response = new HashMap<>();
 
-        return eventList.stream().map(event -> {
+        eventList.forEach(event -> {
             try {
+                Long warehouseId = event.getWarehouse().getId();
+                ExecutionResponseDTO dto = response.computeIfAbsent(warehouseId, (k) -> new ExecutionResponseDTO(warehouseId, new ArrayList<>()));
+
                 EventsExecutedDTO eventsExecutedDTO = new EventsExecutedDTO();
                 eventsExecutedDTO.setEvent(event.getEvent().getName());
                 Method mtd = executorsService.getClass().getMethod(event.getEvent().getExecutor(), WarehouseEvent.class);
@@ -98,14 +106,21 @@ public class WarehouseEventService {
 
                 warehouseEventRepository.save(event);
 
-                return eventsExecutedDTO;
+                dto.getEventsExecuted().add(eventsExecutedDTO);
+
+                response.put(warehouseId, dto);
+
+
+
+
 
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
-                return null;
+
             }
 
-        }).collect(Collectors.toList());
+        });
 
+        return new ArrayList<>(response.values());
     }
 }

@@ -2,10 +2,7 @@ package br.com.mercadolivre.projetointegrador.events.controller;
 
 import br.com.mercadolivre.projetointegrador.events.dto.request.UpdateEventProductsDTO;
 import br.com.mercadolivre.projetointegrador.events.dto.request.NewWarehouseEventDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.EventsExecutedDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseEventCreatedDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseEventDTO;
-import br.com.mercadolivre.projetointegrador.events.dto.response.WarehouseListEventsResponseDTO;
+import br.com.mercadolivre.projetointegrador.events.dto.response.*;
 import br.com.mercadolivre.projetointegrador.events.model.WarehouseEvent;
 import br.com.mercadolivre.projetointegrador.events.service.WarehouseEventService;
 import br.com.mercadolivre.projetointegrador.events.assembler.EventsAssembler;
@@ -53,8 +50,8 @@ public class WarehouseEventController {
     // Executar eventos
     @PostMapping("/events/execute")
     @JsonView(WarehouseEventView.WarehouseEventResponse.class)
-    public ResponseEntity<List<EventsExecutedDTO>> executeEvents(){
-        List<EventsExecutedDTO> response = eventService.executeEvents();
+    public ResponseEntity<List<ExecutionResponseDTO>> executeEvents(){
+        List<ExecutionResponseDTO> response = eventService.executeEvents();
 
         return ResponseEntity.ok().body(response);
     }

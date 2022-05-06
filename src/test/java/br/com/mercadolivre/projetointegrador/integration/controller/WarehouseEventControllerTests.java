@@ -111,7 +111,7 @@ public class WarehouseEventControllerTests {
         mockMvc
                 .perform(MockMvcRequestBuilders.post(CONTROLLER_URL + "/events/execute"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].results").isNotEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isNotEmpty());
 
         Optional<Batch> removed = batchRepository.findById(batch.getId());
 
